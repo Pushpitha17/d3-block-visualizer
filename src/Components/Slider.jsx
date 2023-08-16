@@ -1,8 +1,9 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Slider } from "@mui/material";
 import styled from "@emotion/styled";
 import { marks, min, max, width_of_section } from "../Data/marks";
-import { AppContext } from "../Context/AppContext";
+import { slide } from "../Logic/sliderSlice";
+import { useDispatch } from "react-redux";
 
 const CustomSlider = styled(Slider)({
   ".MuiSlider-thumb": {
@@ -44,8 +45,9 @@ function FormatNumber(num) {
 }
 
 function SliderComponent() {
-  const { setSliderValue } = useContext(AppContext);
   const [unscaledVal, setUnscaledVal] = useState(0);
+
+  const dispatch = useDispatch()
 
   useEffect(() => {
     const labels = document.querySelectorAll(".MuiSlider-markLabel");
@@ -54,7 +56,7 @@ function SliderComponent() {
 
   const handleChange = (e, newVal) => {
     setUnscaledVal(newVal);
-    setSliderValue(parseInt(scale(newVal)));
+    dispatch(slide(parseInt(scale(newVal))))
   };
 
   return (

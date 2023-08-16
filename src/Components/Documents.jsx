@@ -1,12 +1,14 @@
 import { Typography } from "@mui/material";
-import React, { useEffect, useRef, useContext } from "react";
+import React, { useEffect, useRef } from "react";
 import * as d3 from "d3";
-import { AppContext } from "../Context/AppContext";
 import { calColsAndRows, CalX, CalY } from "../Helpers/CalculatePositions";
+import { useSelector } from "react-redux";
 
 function Documents() {
-  const { sliderValue } = useContext(AppContext);
+  const sliderValue = useSelector((state) => state.slider.sliderValue)
   const ref = useRef(null);
+
+  console.log(sliderValue)
 
   useEffect(() => {
     const generate = (sliderValue) => {
