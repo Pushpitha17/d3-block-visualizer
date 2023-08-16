@@ -81,7 +81,7 @@ const CalY = (
     y = rect_height * (i - col_break_points[col - 1] - 1);
   }
 
-  y = y + rect_width * 0.05;
+  y = y + rect_height * 0.05;
   return y;
 };
 
