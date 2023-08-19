@@ -5,6 +5,8 @@ import { marks, min, max, width_of_section } from "../Data/marks";
 import { slide } from "../Logic/sliderSlice";
 import { useDispatch } from "react-redux";
 
+
+
 const CustomSlider = styled(Slider)({
   ".MuiSlider-thumb": {
     width: "30px",
@@ -16,6 +18,7 @@ const CustomSlider = styled(Slider)({
     cursor: "pointer",
   },
   ".MuiSlider-markLabel": {
+    textAlign: 'center',
     transform: "translate(-90%, 30px ) rotate(-30deg)",
   },
   ".MuiSlider-mark": {
@@ -50,8 +53,44 @@ function SliderComponent() {
   const dispatch = useDispatch()
 
   useEffect(() => {
+    const head = document.head || document.getElementsByTagName("head")[0];
+
     const labels = document.querySelectorAll(".MuiSlider-markLabel");
     console.log(labels);
+
+    const generateCSs = (text, index) => {
+      const stylesData = {
+        selector: `#slider .MuiSlider-markLabel:nth-child(${4 + index*2})`,
+        pseduoClass: "after",
+        pseudoProperties: {
+          "white-space": "pre-wrap",
+          "font-size": "0.8em",
+          content: `"${String(text)}"`,
+          display: "block",
+          width: "20ch",
+          "text-align": "center",
+        },
+      };
+
+      const pseudoProperties = Object.entries(stylesData.pseudoProperties)
+        .map(([prop, value]) => `${prop}:${value}`)
+        .join(";");
+
+      return `${stylesData.selector}::${stylesData.pseduoClass}{${pseudoProperties}}\n`;
+    };
+
+    const styleElement = document.createElement("style");
+    styleElement.type = "text/css";
+    let cssText = "";
+
+    for (let i = 0; i < marks.length; i++) {
+      cssText += generateCSs(marks[i].lable_secondary, i);
+    }
+
+    console.log(cssText);
+
+    styleElement.appendChild(document.createTextNode(cssText));
+    head.appendChild(styleElement);
   }, []);
 
   const handleChange = (e, newVal) => {
@@ -62,6 +101,7 @@ function SliderComponent() {
   return (
     <CustomSlider
       aria-label="Always visible"
+      id="slider"
       defaultValue={0}
       value={unscaledVal}
       onChange={handleChange}

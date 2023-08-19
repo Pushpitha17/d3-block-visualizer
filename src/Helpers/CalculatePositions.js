@@ -31,31 +31,38 @@ const last_break_point = (item_num, col_break_points, row_break_points) => {
     row_break_points
   );
 
-  return col_break_points[col - 1] <= row_break_points[row - 1] ? "Row" : "Col";
+  if (col_break_points[col - 1] == row_break_points[row - 1]) {
+    return "Col";
+  }
+
+  return col_break_points[col - 1] < row_break_points[row - 1] ? "Row" : "Col";
 };
 
 const CalX = (
-  i,
+  i, //index
   rect_width,
+  col_spacing,
+  space_multiplier,
   col_break_points,
   row_break_points,
   barsPerColumn
 ) => {
-  i = i + 1;
   let x;
-  const [col, row] = calColsAndRows(i, col_break_points, row_break_points);
-
-  if (last_break_point(i, col_break_points, row_break_points) == "Col") {
-    x = rect_width * (col - 1);
-  }
+  i = i + 1;
+  let [col, row] = calColsAndRows(i, col_break_points, row_break_points);
 
   if (last_break_point(i, col_break_points, row_break_points) == "Row") {
-    x =
-      rect_width *
-      Math.floor((i - 1 - row_break_points[row - 1]) / barsPerColumn);
+    col = Math.floor((i - 1 - row_break_points[row - 1]) / barsPerColumn) + 1;
   }
 
-  x = x + rect_width * 0.025;
+  x = rect_width * (col - 1);
+  if (col > 1) {
+    x =
+      x +
+      (col_spacing * (col - 1) +
+        col_spacing * space_multiplier * Math.floor((col - 1) / 3));
+  }
+
   return x;
 };
 
@@ -74,7 +81,7 @@ const CalY = (
 
   if (last_break_point(i, col_break_points, row_break_points) == "Row") {
     const y_at_col_start = (height / totalRows) * (row - 1);
-    y = y_at_col_start + (rect_height * ((i - 1) % 10));
+    y = y_at_col_start + rect_height * ((i - 1) % 10);
   }
 
   if (last_break_point(i, col_break_points, row_break_points) == "Col") {

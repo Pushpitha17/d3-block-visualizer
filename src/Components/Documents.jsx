@@ -5,24 +5,38 @@ import { calColsAndRows, CalX, CalY } from "../Helpers/CalculatePositions";
 import { useSelector } from "react-redux";
 
 function Documents() {
-  const sliderValue = useSelector((state) => state.slider.sliderValue)
+  const sliderValue = useSelector((state) => state.slider.sliderValue);
   const ref = useRef(null);
 
-  console.log(sliderValue)
+  const dataArray = Array.from(
+    { length: sliderValue },
+    (_, index) => index + 1
+  );
+
+  function updateArray(newNum, integerArray) {
+    const previousNum = dataArray.length;
+    if (newNum > previousNum) {
+      for (let i = previousNum + 1; i <= newNum; i++) {
+        integerArray.push(i);
+      }
+    } else if (newNum < previousNum) {
+      const removeCount = previousNum - newNum;
+      integerArray.splice(-removeCount);
+    }
+  }
+  console.log(sliderValue);
 
   useEffect(() => {
     const generate = (sliderValue) => {
+      const grey = "#505050";
       const colors = [
-        "#000", // black
-        "#2274A5", // Blue
-        "#4CAF50", // Green
-        "#FFC107", // Yellow
-        "#E74C3C", // Dark Red
-        "#00A8E8", // Light Blue
-        "#8E44AD", // Purple
-        "#27AE60", // Bright Green
-        "#F39C12", // Orange
-        "#3498DB", // Royal Blue
+        "#ff0e14", // red
+        "#2274A5", // black
+        "#ff00fa", // pink
+        "#00ff29", // Green
+        "#01fcfc", // Teal
+        "#ffff29", // Yellow
+        "#0000f4", // Blue
       ];
       const barsPerColumn = 10;
 
@@ -36,26 +50,62 @@ function Documents() {
         col_break_points,
         row_break_points
       );
-
+      
+      //parameters 
       const height = ref.current.clientHeight;
       const width = ref.current.clientWidth;
 
+      const col_spacing = (width / totalCols) * 0.05;
+      const space_multiplier = 1.5;
+      const color_change_duration = 2500
+
       const rect_height = height / (totalRows * barsPerColumn);
-      const rect_width = width / totalCols;
+      const rect_width =
+        (width -
+          (col_spacing * (totalCols - 1) +
+            col_spacing * space_multiplier * Math.floor((totalCols - 1) / 3))) /
+        totalCols;
+      //
 
-      const data = Array.from({ length: sliderValue }, (_, i) => i + 1);
+      updateArray(sliderValue, dataArray);
+      const rectangles = container.selectAll(".item").data(dataArray);
 
-      const rectangles = container.selectAll(".item").data(data);
+      rectangles
+        .attr("width", rect_width)
+        .attr("height", rect_height * 0.9)
+        .attr("x", (d, i) => {
+          return CalX(
+            i,
+            rect_width,
+            col_spacing,
+            space_multiplier,
+            col_break_points,
+            row_break_points,
+            barsPerColumn
+          );
+        })
+        .attr("y", (d, i) => {
+          return CalY(
+            i,
+            rect_height,
+            rect_width,
+            col_break_points,
+            row_break_points,
+            height,
+            totalRows
+          );
+        });
 
       rectangles
         .enter()
         .append("rect")
-        .merge(rectangles)
         .attr("class", "item")
         .attr("x", (d, i) => {
           return CalX(
             i,
             rect_width,
+            col_spacing,
+            space_multiplier,
             col_break_points,
             row_break_points,
             barsPerColumn
@@ -72,9 +122,19 @@ function Documents() {
             totalRows
           );
         })
-        .attr("width", rect_width * 0.95)
+        .attr("width", rect_width)
         .attr("height", rect_height * 0.9)
-        .style("fill", (d, i) => colors[i % 10]);
+        .style("fill", (d, i) => {
+          const rand = Math.floor(Math.random() * 100) + 1;
+          if (rand <= 25) {
+            return grey;
+          } else {
+            return colors[Math.floor((rand - 25) / 8)];
+          }
+        })
+        .transition()
+        .duration(color_change_duration)
+        .style("fill", grey);
 
       rectangles.exit().remove();
     };
@@ -98,7 +158,7 @@ function Documents() {
           borderRadius: "5%",
           width: "400px",
           height: "450px",
-          padding : '0 16px',
+          padding: "0 16px",
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
