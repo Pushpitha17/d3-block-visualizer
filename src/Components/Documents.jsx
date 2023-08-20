@@ -50,7 +50,7 @@ function Documents() {
         col_break_points,
         row_break_points
       );
-      
+
       //parameters 
       const height = ref.current.clientHeight;
       const width = ref.current.clientWidth;
@@ -124,7 +124,7 @@ function Documents() {
         })
         .attr("width", rect_width)
         .attr("height", rect_height * 0.9)
-        .style("fill", (d, i) => {
+        .style("fill", () => {
           const rand = Math.floor(Math.random() * 100) + 1;
           if (rand <= 25) {
             return grey;

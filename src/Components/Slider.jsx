@@ -55,9 +55,6 @@ function SliderComponent() {
   useEffect(() => {
     const head = document.head || document.getElementsByTagName("head")[0];
 
-    const labels = document.querySelectorAll(".MuiSlider-markLabel");
-    console.log(labels);
-
     const generateCSs = (text, index) => {
       const stylesData = {
         selector: `#slider .MuiSlider-markLabel:nth-child(${4 + index*2})`,
@@ -86,8 +83,6 @@ function SliderComponent() {
     for (let i = 0; i < marks.length; i++) {
       cssText += generateCSs(marks[i].lable_secondary, i);
     }
-
-    console.log(cssText);
 
     styleElement.appendChild(document.createTextNode(cssText));
     head.appendChild(styleElement);

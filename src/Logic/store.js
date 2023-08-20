@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import sliderReducer from './sliderSlice'
+import switchSlice from "./switchSlice";
 
 
 const store = configureStore( {
     reducer : {
-        slider : sliderReducer
+        slider: sliderReducer, 
+        switch : switchSlice
     }
 })
 

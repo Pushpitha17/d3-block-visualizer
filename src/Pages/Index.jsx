@@ -1,20 +1,32 @@
 import React from "react";
 import AppBar from "../Components/AppBar";
-import { Container } from "@mui/material";
-import Documents from "../Components/Documents";
+import { Container, Box } from "@mui/material";
 import Slider from "../Components/Slider";
-// import D3Slider from "../Components/D3Slider";
-// import NewSlider from "../Components/NewSlider";
+import AnimationArea from "../Components/AnimationArea";
 
 function Index() {
 
   return (
     <>
       <AppBar />
-      <Container>
-        <Documents></Documents>
-        <Slider></Slider>
-        {/* <NewSlider></NewSlider> */}
+      <Container sx={{
+        display: 'flex',
+        height: "calc(100vh - 180px)",
+        flexDirection: 'column'
+      }}>
+        <Box sx={{
+          flex: 1, 
+          py: '20px', 
+          width: '80%',
+          margin : '0 auto'
+        }}>
+          <AnimationArea />
+        </Box>
+        <Box sx={{
+          height: "50px"
+        }}>
+          <Slider />
+        </Box>
       </Container>
     </>
   );
