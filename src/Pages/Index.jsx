@@ -17,7 +17,7 @@ function Index() {
         <Box sx={{
           flex: 1, 
           py: '20px', 
-          width: '80%',
+          width: '100%',
           margin : '0 auto'
         }}>
           <AnimationArea />

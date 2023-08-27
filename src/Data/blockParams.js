@@ -16,7 +16,7 @@ const col_break_points = [0, 10, 20, 90, 160, 250, 360, 490, 640, 810]
 const row_break_points = [0, 30, 60, 120, 200, 300, 420, 560, 720, 900]
 
 const space_multiplier = 1.5
-const color_change_duration = 2500
+const color_change_duration = 10000
 
 export {
   grey,

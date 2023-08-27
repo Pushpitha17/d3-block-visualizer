@@ -3,7 +3,7 @@ import { Slider } from "@mui/material";
 import styled from "@emotion/styled";
 import { marks, min, max, width_of_section } from "../Data/marks";
 import { slide } from "../Logic/sliderSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 
 
@@ -49,6 +49,7 @@ function FormatNumber(num) {
 
 function SliderComponent() {
   const [unscaledVal, setUnscaledVal] = useState(0);
+  const dataEnabled = useSelector((state) => state.switch.dataEnabled);
 
   const dispatch = useDispatch()
 
@@ -105,6 +106,7 @@ function SliderComponent() {
       max={max}
       marks={marks}
       scale={scale}
+      disabled={dataEnabled}
       valueLabelDisplay="on"
       valueLabelFormat={FormatNumber}
     />

@@ -1,6 +1,6 @@
 import { CalX, CalY } from "../Helpers/CalculatePositions"
 
-const drawBlocks = (
+const drawBlockRight = (
   svg,
   dataArray,
   x_start,
@@ -16,10 +16,11 @@ const drawBlocks = (
   space_multiplier,
   grey,
   colors,
-  color_change_duration
+  color_change_duration,
 ) => {
-  const rectangles = svg.selectAll(".item").data(dataArray)
-  console.log(dataArray)
+
+  let rectangles = svg.selectAll(".r-item").data(dataArray)
+
 
   rectangles
     .attr("width", rect_width)
@@ -51,7 +52,7 @@ const drawBlocks = (
   rectangles
     .enter()
     .append("rect")
-    .attr("class", "item")
+    .attr("class", "r-item")
     .attr("x", (d, i) => {
       return CalX(
         i,
@@ -78,12 +79,12 @@ const drawBlocks = (
     .attr("width", rect_width)
     .attr("height", rect_height * 0.9)
     .style("fill", (d) => d.color)
-    .attr("id", (d) => (d.i))
-    .transition()
-    .duration(color_change_duration)
-    .style("fill", grey)
+    .attr("id", (d) => `r-${d.i}`)
+    // .transition()
+    // .duration(color_change_duration)
+    // .style("fill", grey)
 
   rectangles.exit().remove()
 }
 
-export default drawBlocks
+export default drawBlockRight
