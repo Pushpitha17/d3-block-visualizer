@@ -12,7 +12,7 @@ const colors = [
 
 const barsPerColumn = 10
 
-const col_break_points = [0, 10, 20, 90, 160, 250, 360, 490, 640, 810]
+const col_break_points = [0, 10, 20, 90, 160, 250, 360, 490, 640, 810, 1000]
 const row_break_points = [0, 30, 60, 120, 200, 300, 420, 560, 720, 900]
 
 const space_multiplier = 1.5

@@ -16,6 +16,7 @@ import calculateRadius from "../Helpers/calculateRadius";
 import generateArcPath from "../Helpers/generateAnimationArc";
 import _ from 'lodash';
 import drawSquares from "../DrawingFunctions/drawSquares";
+import drawSquare from "../DrawingFunctions/drawSquare";
 
 function AnimationArea() {
 
@@ -38,34 +39,6 @@ function AnimationArea() {
       color: determineColor()
     })
   ))
-
-  const [squares, setSquares] = useState([])
-
-  useEffect(() => {
-    const colors = _.map(dataBlockRight, 'color')
-    const uniqColors = _.uniq(colors)
-
-    const num_of_squares = 50
-
-    const objectArray = []
-
-    for (let i = 1; i <= num_of_squares; i++) {
-
-      const randomIndex = Math.floor(Math.random() * uniqColors.length);
-      const obj = {
-        i,
-        color: uniqColors[randomIndex]
-      }
-
-      objectArray.push(obj);
-    }
-
-    setSquares(objectArray)
-
-  }, [])
-
-  console.log({ squares })
-
 
   const [mainCordinates, setMainCordinates] = useState({
     blocks_container_height: null,
@@ -184,28 +157,33 @@ function AnimationArea() {
       drawDocumentHeader(headerElement, "2.5% Original Size", scaled_x_block_start, height * 0.1, blocks_container_width, blocks_container_height * 0.1, dataEnabled)
 
 
-      drawSquares(container, squares, x_block_start, y_block_start, blocks_container_height, blocks_container_width)
+      const squareAnimation = async () => {
 
-      const triggerAnimation = async () => {
-        for (const object of squares) {
-          const color = object.color
+        while (true) {
+
+          const colors = _.map(dataBlockRight, 'color')
+          const uniqColors = _.uniq(colors)
+          const randomColor = uniqColors[Math.floor(Math.random() * uniqColors.length)]
+
+          const square = drawSquare(container, x_block_start, y_block_start, blocks_container_height, blocks_container_width, randomColor)
 
           const matchingIndices = []
 
           dataBlockRight.forEach((d, i) => {
-            if (d.color == color) {
+            if (randomColor == d.color) {
               matchingIndices.push(i + 1)
             }
           })
           console.log(matchingIndices)
           const randomIndex = matchingIndices[Math.floor(Math.random() * matchingIndices.length)];
 
-          addAnimation(object.i, `r-${randomIndex}`, height, x_block_start, y_block_start)
+          addAnimation(square, `r-${randomIndex}`, height, x_block_start, y_block_start)
+
           await new Promise(resolve => setTimeout(resolve, 150));
         }
       }
 
-      triggerAnimation()
+      squareAnimation()
 
 
     } else {
@@ -220,12 +198,10 @@ function AnimationArea() {
 
 
 
-  const addAnimation = (elementID, targetID, height, x_block_start, y_block_start) => {
+  const addAnimation = (element, targetID, height, x_block_start, y_block_start) => {
 
-    const element = d3.select(`[id="square-${elementID}"]`)
     const target = d3.select(`[id="${targetID}"]`)
-
-    const container = d3.select("#svgContainer1");
+    const container = d3.select("#squares");
 
     const start_x = +element.attr("x")
     const start_y = +element.attr("y")
@@ -235,7 +211,7 @@ function AnimationArea() {
 
     const element_width = element.node().getBBox().width
 
-    console.log({ start_x, x: +element.attr("x"), width: element.node().getBBox().width })
+    // console.log({ start_x, x: +element.attr("x"), width: element.node().getBBox().width })
 
     const chordLength = end_x - start_x
     const radius = calculateRadius(chordLength)
@@ -248,11 +224,9 @@ function AnimationArea() {
 
     const transformX = start_x - svgOriginX
     const transfromY = start_y - svgOriginY
-    console.log({ elementID, start_x, start_y, svgOriginX, svgOriginY })
-
 
     const path = container.append("path")
-      .attr("id", `${elementID}-animationpath`)
+      .attr("class", `square-animationpath`)
       .attr("d", pathData)
       .attr("fill", "none")
       .attr("stroke", "none");
@@ -261,7 +235,7 @@ function AnimationArea() {
 
     const animate = () => {
       element
-        .style("transition-timing-function","linear")
+        .style("transition-timing-function", "linear")
         .transition()
         .duration(2000)
         .attrTween("transform", function () {
@@ -298,6 +272,7 @@ function AnimationArea() {
         >
           <text id="header"></text>
           <text id="header_right"></text>
+          <g id="squares"></g>
           <path id="border1"></path>
           <path id="border2"></path>
           <path id="full-border"></path>

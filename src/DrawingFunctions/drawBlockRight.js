@@ -80,6 +80,7 @@ const drawBlockRight = (
     .attr("height", rect_height * 0.9)
     .style("fill", (d) => d.color)
     .attr("id", (d) => `r-${d.i}`)
+    .style("z-index" , "10000")
     // .transition()
     // .duration(color_change_duration)
     // .style("fill", grey)
