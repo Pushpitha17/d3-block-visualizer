@@ -4,6 +4,7 @@ import styled from "@emotion/styled";
 import { marks, min, max, width_of_section } from "../Data/marks";
 import { slide } from "../Logic/sliderSlice";
 import { useDispatch, useSelector } from "react-redux";
+import calHeaderValue from "../Helpers/CalheaderValue";
 
 
 
@@ -40,11 +41,12 @@ const scale = (value) => {
   const nextMark = marks[previousMarkIndex + 1];
   const increment =
     (nextMark.scaledValue - previousMark.scaledValue) / width_of_section;
+  // console.log( {value : remainder * increment + previousMark.scaledValue, previous :previousMark.scaledValue, remainder, increment})
   return remainder * increment + previousMark.scaledValue;
 };
 
 function FormatNumber(num) {
-  return parseInt(num);
+  return calHeaderValue(parseInt(num));
 }
 
 function SliderComponent() {

@@ -7,7 +7,7 @@ import updateDataArray from "../Helpers/updateDataArray";
 import drawBlocks from "../DrawingFunctions/drawBlocks";
 import { grey, colors, barsPerColumn, col_break_points, row_break_points, space_multiplier, color_change_duration } from "../Data/blockParams";
 import { calColsAndRows } from "../Helpers/CalculatePositions";
-import { Box, duration } from "@mui/material";
+import { Box } from "@mui/material";
 import DataSwitch from "./DataSwitch";
 import drawBlockRight from "../DrawingFunctions/drawBlockRight";
 import drawBorderRight from "../DrawingFunctions/drawBorderRight";
@@ -15,8 +15,8 @@ import determineColor from "../Helpers/determineColor";
 import calculateRadius from "../Helpers/calculateRadius";
 import generateArcPath from "../Helpers/generateAnimationArc";
 import _ from 'lodash';
-import drawSquares from "../DrawingFunctions/drawSquares";
 import drawSquare from "../DrawingFunctions/drawSquare";
+import calHeaderValue from "../Helpers/CalheaderValue";
 
 function AnimationArea() {
 
@@ -49,7 +49,6 @@ function AnimationArea() {
     scaled_y_block_start: null
   })
 
-
   const setWidth = (element) => {
     if (element) {
       // element.style.width = `${element.clientHeight * 2}px`
@@ -77,7 +76,7 @@ function AnimationArea() {
 
       let headerElement = container.select("#header")
 
-      drawDocumentHeader(headerElement, `${sliderValue} Documentes`, x_block_start, 0, blocks_container_width, height * 0.1)
+      drawDocumentHeader(headerElement, `${calHeaderValue(sliderValue)} Documentes`, x_block_start, 0, blocks_container_width, height * 0.1)
       setMainCordinates({
         height, width, blocks_container_height, blocks_container_width, x_block_start, y_block_start, scaled_x_block_start, scaled_y_block_start
       })
@@ -89,7 +88,7 @@ function AnimationArea() {
       y_block_start = (height * 0.1) + blocks_container_height * 0.1
 
       let headerElement = container.select("#header")
-      drawDocumentHeader(headerElement, `${sliderValue} Documentes`, x_block_start, height * 0.1, blocks_container_width, blocks_container_height * 0.1, dataEnabled)
+      drawDocumentHeader(headerElement, `${calHeaderValue(sliderValue)} Documentes`, x_block_start, height * 0.1, blocks_container_width, blocks_container_height * 0.1, dataEnabled)
 
       scaled_x_block_start = width - (blocks_container_width + 30)
       scaled_y_block_start = y_block_start
@@ -159,13 +158,15 @@ function AnimationArea() {
 
       const squareAnimation = async () => {
 
+        const squaresContainer = d3.select("#squares");
+
         while (true) {
 
           const colors = _.map(dataBlockRight, 'color')
           const uniqColors = _.uniq(colors)
           const randomColor = uniqColors[Math.floor(Math.random() * uniqColors.length)]
 
-          const square = drawSquare(container, x_block_start, y_block_start, blocks_container_height, blocks_container_width, randomColor)
+          const square = drawSquare(squaresContainer, x_block_start, y_block_start, blocks_container_height, blocks_container_width, randomColor)
 
           const matchingIndices = []
 
@@ -241,7 +242,7 @@ function AnimationArea() {
         .attrTween("transform", function () {
           return function (t) {
             const point = path.node().getPointAtLength(t * pathLength);
-            console.log({ x: transformX + point.x, y: transfromY + point.y })
+            // console.log({ x: transformX + point.x, y: transfromY + point.y })
             return `translate(${transfromY + point.x - (start_x - x_block_start - 30 - element_width)},${transfromY + point.y - (start_y - y_block_start)})`;
           };
         })
@@ -271,11 +272,11 @@ function AnimationArea() {
           id="svgContainer1"
         >
           <text id="header"></text>
-          <text id="header_right"></text>
           <g id="squares"></g>
+          <path id="full-border"></path>
+          <text id="header_right"></text>
           <path id="border1"></path>
           <path id="border2"></path>
-          <path id="full-border"></path>
         </svg>
         <Box sx={{
           position: 'absolute',

@@ -24,7 +24,7 @@ const drawBorderRight = (
 
   border_r
     .attr("d", fullBorder) // Set the path data
-    .attr("fill", "none")
+    .attr("fill", "rgba(100%, 100%, 100%, 0.6)")
     .attr("stroke", "black")
     .attr("stroke-width", 0.6)
     .style("display","block")

@@ -25,19 +25,19 @@ const marks = [
   },
   {
     value: width_of_section * 3,
-    scaledValue: 10000,
+    scaledValue: 1900, //increment 1 for 10
     label: "10,000 Documents",
     lable_secondary: "One GTM Motion",
   },
   {
     value: width_of_section * 4,
-    scaledValue: 100000,
+    scaledValue: 2800,
     label: "100,000 Documents",
     lable_secondary: "One GTM Motion + One Quater Customer Interaction",
   },
   {
     value: width_of_section * 5,
-    scaledValue: 1000000,
+    scaledValue: 3700,
     label: "1,000,000 + Documents",
     lable_secondary: "One End to End offering per year",
   },

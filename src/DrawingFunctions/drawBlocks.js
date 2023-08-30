@@ -19,7 +19,6 @@ const drawBlocks = (
   color_change_duration
 ) => {
   const rectangles = svg.selectAll(".item").data(dataArray)
-  console.log(dataArray)
 
   rectangles
     .attr("width", rect_width)
