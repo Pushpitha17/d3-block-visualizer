@@ -1,6 +1,6 @@
 const calHeaderValue = (sliderValue) => {
-  const marks = [0, 1000, 1900, 2800, 3700]
-  const increment = [1, 10, 100, 1000]
+  const marks = [0, 1000, 1900, 2800, 3800]
+  const increment = [1, 10, 100, 900]
 
   let index = 0
   let value = 0

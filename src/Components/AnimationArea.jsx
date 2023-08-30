@@ -76,7 +76,7 @@ function AnimationArea() {
 
       let headerElement = container.select("#header")
 
-      drawDocumentHeader(headerElement, `${calHeaderValue(sliderValue)} Documentes`, x_block_start, 0, blocks_container_width, height * 0.1)
+      drawDocumentHeader(headerElement, `${calHeaderValue(sliderValue)} Documents`, x_block_start, 0, blocks_container_width, height * 0.1)
       setMainCordinates({
         height, width, blocks_container_height, blocks_container_width, x_block_start, y_block_start, scaled_x_block_start, scaled_y_block_start
       })
@@ -88,7 +88,7 @@ function AnimationArea() {
       y_block_start = (height * 0.1) + blocks_container_height * 0.1
 
       let headerElement = container.select("#header")
-      drawDocumentHeader(headerElement, `${calHeaderValue(sliderValue)} Documentes`, x_block_start, height * 0.1, blocks_container_width, blocks_container_height * 0.1, dataEnabled)
+      drawDocumentHeader(headerElement, `${calHeaderValue(sliderValue)} Documents`, x_block_start, height * 0.1, blocks_container_width, blocks_container_height * 0.1, dataEnabled)
 
       scaled_x_block_start = width - (blocks_container_width + 30)
       scaled_y_block_start = y_block_start
@@ -130,8 +130,12 @@ function AnimationArea() {
     //scaled block
     if (dataEnabled) {
 
+      const squaresContainer = d3.select("#squares");
+
       //make 15% opacity
       container.selectAll(".item").style("opacity", "0.15")
+      squaresContainer.style("display", "block");
+
 
       const [totalCols, totalRows] = calColsAndRows(
         10,
@@ -158,8 +162,6 @@ function AnimationArea() {
 
       const squareAnimation = async () => {
 
-        const squaresContainer = d3.select("#squares");
-
         while (true) {
 
           const colors = _.map(dataBlockRight, 'color')
@@ -180,22 +182,32 @@ function AnimationArea() {
 
           addAnimation(square, `r-${randomIndex}`, height, x_block_start, y_block_start)
 
-          await new Promise(resolve => setTimeout(resolve, 150));
+          await new Promise(resolve => setTimeout(resolve, 300));
         }
       }
 
-      squareAnimation()
+      const runAnimateFunctions = async () => {
+        for (let i = 0; i < 4; i++) {
+          squareAnimation()
+          await new Promise(resolve => setTimeout(resolve, 1000));
 
+        }
+      }
+
+      runAnimateFunctions()
 
     } else {
       drawBlockRight(container, [], scaled_x_block_start, scaled_y_block_start, blocks_container_height, totalRows, rect_width, rect_height, col_break_points, row_break_points, barsPerColumn, col_spacing, space_multiplier, grey, colors, color_change_duration, true)
       container.select("#header_right").style("display", "none")
       container.select("#full-border").style("display", "none")
       container.selectAll(".item").style("opacity", "1")
-      container.selectAll(".square").remove();
+      d3.select("#squares").style("display", "none");
     }
 
   }, [dataArray])
+
+  console.log({col_break_points, row_break_points})
+
 
 
 
@@ -211,6 +223,7 @@ function AnimationArea() {
 
 
     const element_width = element.node().getBBox().width
+    const element_height = element.node().getBBox().height
 
     // console.log({ start_x, x: +element.attr("x"), width: element.node().getBBox().width })
 
@@ -238,12 +251,13 @@ function AnimationArea() {
       element
         .style("transition-timing-function", "linear")
         .transition()
-        .duration(2000)
+        .duration(2500)
+        .delay(500)
         .attrTween("transform", function () {
           return function (t) {
             const point = path.node().getPointAtLength(t * pathLength);
             // console.log({ x: transformX + point.x, y: transfromY + point.y })
-            return `translate(${transfromY + point.x - (start_x - x_block_start - 30 - element_width)},${transfromY + point.y - (start_y - y_block_start)})`;
+            return `translate(${transfromY + point.x - (start_x - x_block_start - 30 - element_width)},${transfromY + point.y - (start_y - y_block_start + element_height/2)})`;
           };
         })
         .remove()

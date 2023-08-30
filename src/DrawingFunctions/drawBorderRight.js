@@ -4,7 +4,7 @@ const drawBorderRight = (
   x_block_start,
   blocks_container_width,
 ) => {
-  const br = 15 //border raidus
+  const br = 18 //border raidus
   // const p = 20 //padding
 
   const start = x_block_start

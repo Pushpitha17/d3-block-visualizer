@@ -37,10 +37,10 @@ const marks = [
   },
   {
     value: width_of_section * 5,
-    scaledValue: 3700,
+    scaledValue: 3800,
     label: "1,000,000 + Documents",
     lable_secondary: "One End to End offering per year",
   },
-];
+];9
 
 export { marks, min, max, width_of_section };
