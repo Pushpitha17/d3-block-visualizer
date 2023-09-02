@@ -18,9 +18,15 @@ const DataSwitch = () => {
 
   return (
     <FormControlLabel
+      sx={{
+        '& .MuiFormControlLabel-label': {
+          fontWeight: '600',
+          textAlign : 'right'
+        },
+      }}
       value={!switchState ? "start" : "end"}
       control={<Switch color="primary" checked={switchState} onClick={handleToggle} />}
-      label={!switchState ? "Data Disabled" : "Data Enabled"}
+      label={!switchState ? "Turnkey AI Disabled" : "Turnkey AI Enabled"}
       labelPlacement="start"
     />
   )

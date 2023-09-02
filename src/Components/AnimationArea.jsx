@@ -7,7 +7,7 @@ import updateDataArray from "../Helpers/updateDataArray";
 import drawBlocks from "../DrawingFunctions/drawBlocks";
 import { grey, colors, barsPerColumn, col_break_points, row_break_points, space_multiplier, color_change_duration } from "../Data/blockParams";
 import { calColsAndRows } from "../Helpers/CalculatePositions";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import DataSwitch from "./DataSwitch";
 import drawBlockRight from "../DrawingFunctions/drawBlockRight";
 import drawBorderRight from "../DrawingFunctions/drawBorderRight";
@@ -17,6 +17,8 @@ import generateArcPath from "../Helpers/generateAnimationArc";
 import _ from 'lodash';
 import drawSquare from "../DrawingFunctions/drawSquare";
 import calHeaderValue from "../Helpers/CalheaderValue";
+import drawTextBoxLeft from "../DrawingFunctions/drawTextBoxLeft";
+import drawTextBoxRight from "../DrawingFunctions/drawTextBoxRight";
 
 function AnimationArea() {
 
@@ -41,6 +43,7 @@ function AnimationArea() {
   ))
 
   const [mainCordinates, setMainCordinates] = useState({
+    height: null,
     blocks_container_height: null,
     blocks_container_width: null,
     x_block_start: null,
@@ -109,6 +112,8 @@ function AnimationArea() {
 
     const { height, blocks_container_height, blocks_container_width, x_block_start, y_block_start, scaled_x_block_start, scaled_y_block_start, width } = mainCordinates
     const container = d3.select("#svgContainer1");
+    container.select("#text_box_left").style("display", "block")
+    container.select("#text_box_right").style("display", "block")
 
     const [totalCols, totalRows] = calColsAndRows(
       sliderValue,
@@ -127,9 +132,18 @@ function AnimationArea() {
 
     drawBlocks(container, dataArray, x_block_start, y_block_start, blocks_container_height, totalRows, rect_width, rect_height, col_break_points, row_break_points, barsPerColumn, col_spacing, space_multiplier, grey, colors, color_change_duration)
 
+    const textBoxLeft = container.select("#text_box_left")
+    const textBoxRight = container.select("#text_box_right")
+
+    drawTextBoxLeft(textBoxLeft, width, x_block_start, height, blocks_container_width)
+    drawTextBoxRight(textBoxRight, width, height, x_block_start, blocks_container_width)
+
+
     //scaled block
     if (dataEnabled) {
 
+      container.select("#text_box_left").style("display", "none")
+      container.select("#text_box_right").style("display", "none")
       const squaresContainer = d3.select("#squares");
 
       //make 15% opacity
@@ -158,7 +172,6 @@ function AnimationArea() {
 
       let headerElement = container.select("#header_right")
       drawDocumentHeader(headerElement, "2.5% Original Size", scaled_x_block_start, height * 0.1, blocks_container_width, blocks_container_height * 0.1, dataEnabled)
-
 
       const squareAnimation = async () => {
 
@@ -206,7 +219,7 @@ function AnimationArea() {
 
   }, [dataArray])
 
-  console.log({col_break_points, row_break_points})
+  console.log({ col_break_points, row_break_points })
 
 
 
@@ -257,7 +270,7 @@ function AnimationArea() {
           return function (t) {
             const point = path.node().getPointAtLength(t * pathLength);
             // console.log({ x: transformX + point.x, y: transfromY + point.y })
-            return `translate(${transfromY + point.x - (start_x - x_block_start - 30 - element_width)},${transfromY + point.y - (start_y - y_block_start + element_height/2)})`;
+            return `translate(${transfromY + point.x - (start_x - x_block_start - 30 - element_width)},${transfromY + point.y - (start_y - y_block_start + element_height / 2)})`;
           };
         })
         .remove()
@@ -266,7 +279,8 @@ function AnimationArea() {
     animate()
   }
 
-  useEffect(() => { })
+
+  console.log({ mainCordinates })
 
   return (
     <div
@@ -286,18 +300,104 @@ function AnimationArea() {
           id="svgContainer1"
         >
           <text id="header"></text>
+          <g id="text_box_left">
+            <rect id="rect_left"></rect>
+            <text id="text_left"></text>
+            <svg xmlns="http://www.w3.org/2000/svg" id="warning_sign" viewBox="0 0 148.749 130.48">
+              <g id="_4737783_notice_sign_warning_alert" data-name="4737783_notice_sign_warning_alert" transform="translate(-8.017 -9.925)">
+                <path id="Path_77" data-name="Path 77" d="M77.119,12.949,8.895,131.1a6.188,6.188,0,0,0,5.272,9.3h136.45a6.188,6.188,0,0,0,5.272-9.3L87.663,12.949A6.108,6.108,0,0,0,77.119,12.949Z" transform="translate(0 0)" fill="#db6500" />
+                <circle id="Ellipse_8" data-name="Ellipse 8" cx="6.202" cy="6.202" r="6.202" transform="translate(76.189 112.495)" fill="#fff" />
+                <g id="Group_82" data-name="Group 82" transform="translate(73.945 53.5)">
+                  <path id="Path_78" data-name="Path 78" d="M34,73.667,29.349,33.353A8.425,8.425,0,1,1,46.1,31.492v1.861L41.444,73.667a3.993,3.993,0,0,1-4.031,3.411A4.3,4.3,0,0,1,34,73.667Z" transform="translate(-29.276 -23.976)" fill="#fff" />
+                </g>
+              </g>
+            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns: xlink="http://www.w3.org/1999/xlink" id="arrow_1" viewBox="0 0 49 292">
+              <defs>
+                <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+                  <stop offset="0" stop-color="#cbcbcb" />
+                  <stop offset="1" stop-color="#a0a0a0" />
+                </linearGradient>
+              </defs>
+              <path id="Polygon_1" data-name="Polygon 1" d="M146,0,292,49H0Z" transform="translate(49) rotate(90)" fill="url(#linear-gradient)" />
+            </svg>
+          </g>
+          <g id="text_box_right">
+            <rect id="rect_right"></rect>
+            <text id="text_right_1"></text>
+            <text id="text_right_2"></text>
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns: xlink="http://www.w3.org/1999/xlink" id="arrow_2" viewBox="0 0 49 292">
+              <defs>
+                <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+                  <stop offset="0" stop-color="#cbcbcb" />
+                  <stop offset="1" stop-color="#a0a0a0" />
+                </linearGradient>
+              </defs>
+              <path id="Polygon_1" data-name="Polygon 1" d="M146,0,292,49H0Z" transform="translate(49) rotate(90)" fill="url(#linear-gradient)" />
+            </svg>
+          </g>
           <g id="squares"></g>
           <path id="full-border"></path>
           <text id="header_right"></text>
           <path id="border1"></path>
           <path id="border2"></path>
         </svg>
+        {!dataEnabled && <Box sx={{
+          maxWidth: (mainCordinates.x_block_start - 20) * 0.65,
+          height: ((mainCordinates.height * 0.6)) * 0.6,
+          p: "10px",
+          position: 'absolute',
+          display: 'flex',
+          alignItems: 'top',
+          top:  (mainCordinates.height - ((mainCordinates.height * 0.6))) / 2
+        }}>
+          <Typography
+            sx={{
+              maxWidth: (mainCordinates.x_block_start - 20) * 0.65,
+              top: (mainCordinates.height - ((mainCordinates.height * 0.6))) / 2,
+              wordBreak: "break-word",
+              overflow: 'hidden'
+            }}
+
+          >The more documents and data, the more opportunities for duplicate, out-dated information, and AI failure.</Typography>
+        </Box>}
+        {!dataEnabled && <Box sx={{
+          maxWidth: (mainCordinates.x_block_start - 20) * 0.65,
+          height: ((mainCordinates.height * 0.6)) * 0.6,
+          p: "10px",
+          position: 'absolute',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'left',
+          justifyContent: 'space-between',
+          top: (mainCordinates.height - ((mainCordinates.height * 0.6))) / 2,
+          left: (mainCordinates.width - ((mainCordinates.x_block_start - 20) * 0.65)),
+        }}>
+          <Typography
+            sx={{
+              maxWidth: (mainCordinates.x_block_start - 20) * 0.65,
+              wordBreak: "break-word",
+              overflow: 'hidden'
+            }}
+
+          >Over time, your documents and content will become outdated. Training your AI on outdated information creates business risk.</Typography>
+          <Typography
+            sx={{
+              maxWidth: (mainCordinates.x_block_start - 20) * 0.65,
+              fontSize: '0.7rem',
+              wordBreak: "break-word",
+              overflow: 'hidden'
+            }}
+
+          >Click to see how we solved the problem.</Typography>
+        </Box>}
+
         <Box sx={{
           position: 'absolute',
           transformOrigin: "center center",
           right: dataEnabled ? '50%' : '50px',
-          top: dataEnabled ? '0' : '48%',
-          width: '100px',
+          top: dataEnabled ? '0' : (mainCordinates.height - ((mainCordinates.height * 0.6))) / 2 + (mainCordinates.height * 0.6)*0.75,
+          width: '150px',
         }}>
           <DataSwitch />
         </Box>
