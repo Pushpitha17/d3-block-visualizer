@@ -87,6 +87,9 @@ function SliderComponent() {
       cssText += generateCSs(marks[i].lable_secondary, i);
     }
 
+    //fix alignment of last label
+    cssText += `#slider .MuiSlider-markLabel:nth-child(${2 + marks.length*2})::after{ width : 100%}`
+
     styleElement.appendChild(document.createTextNode(cssText));
     head.appendChild(styleElement);
   }, []);

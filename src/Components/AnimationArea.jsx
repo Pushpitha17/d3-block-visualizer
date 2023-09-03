@@ -190,7 +190,6 @@ function AnimationArea() {
               matchingIndices.push(i + 1)
             }
           })
-          console.log(matchingIndices)
           const randomIndex = matchingIndices[Math.floor(Math.random() * matchingIndices.length)];
 
           addAnimation(square, `r-${randomIndex}`, height, x_block_start, y_block_start)
@@ -203,7 +202,6 @@ function AnimationArea() {
         for (let i = 0; i < 4; i++) {
           squareAnimation()
           await new Promise(resolve => setTimeout(resolve, 1000));
-
         }
       }
 
@@ -219,24 +217,20 @@ function AnimationArea() {
 
   }, [dataArray])
 
-  console.log({ col_break_points, row_break_points })
-
-
-
 
   const addAnimation = (element, targetID, height, x_block_start, y_block_start) => {
 
     const target = d3.select(`[id="${targetID}"]`)
     const container = d3.select("#squares");
 
-    const start_x = +element.attr("x")
-    const start_y = +element.attr("y")
-    const end_x = +target.attr("x") + 30
-    const end_y = +target.attr("y") + 20
-
 
     const element_width = element.node().getBBox().width
     const element_height = element.node().getBBox().height
+
+    const start_x = +element.attr("x")
+    const start_y = +element.attr("y") + element_height*0.75
+    const end_x = +target.attr("x") + element_width
+    const end_y = +target.attr("y") + element_height
 
     // console.log({ start_x, x: +element.attr("x"), width: element.node().getBBox().width })
 
@@ -270,7 +264,7 @@ function AnimationArea() {
           return function (t) {
             const point = path.node().getPointAtLength(t * pathLength);
             // console.log({ x: transformX + point.x, y: transfromY + point.y })
-            return `translate(${transfromY + point.x - (start_x - x_block_start - 30 - element_width)},${transfromY + point.y - (start_y - y_block_start + element_height / 2)})`;
+            return `translate(${transfromY + point.x - (start_x - x_block_start - element_width)},${transfromY + point.y  - (start_y - y_block_start + element_height*2)})`;
           };
         })
         .remove()
@@ -343,7 +337,7 @@ function AnimationArea() {
           <path id="border2"></path>
         </svg>
         {!dataEnabled && <Box sx={{
-          maxWidth: (mainCordinates.x_block_start - 20) * 0.65,
+          maxWidth: (mainCordinates.x_block_start - 20) * 0.6,
           height: ((mainCordinates.height * 0.6)) * 0.6,
           p: "10px",
           position: 'absolute',
@@ -353,8 +347,6 @@ function AnimationArea() {
         }}>
           <Typography
             sx={{
-              maxWidth: (mainCordinates.x_block_start - 20) * 0.65,
-              top: (mainCordinates.height - ((mainCordinates.height * 0.6))) / 2,
               wordBreak: "break-word",
               overflow: 'hidden'
             }}
@@ -362,7 +354,7 @@ function AnimationArea() {
           >The more documents and data, the more opportunities for duplicate, out-dated information, and AI failure.</Typography>
         </Box>}
         {!dataEnabled && <Box sx={{
-          maxWidth: (mainCordinates.x_block_start - 20) * 0.65,
+          maxWidth: (mainCordinates.x_block_start - 20) * 0.6,
           height: ((mainCordinates.height * 0.6)) * 0.6,
           p: "10px",
           position: 'absolute',
@@ -375,7 +367,6 @@ function AnimationArea() {
         }}>
           <Typography
             sx={{
-              maxWidth: (mainCordinates.x_block_start - 20) * 0.65,
               wordBreak: "break-word",
               overflow: 'hidden'
             }}
