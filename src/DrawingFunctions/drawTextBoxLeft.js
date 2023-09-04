@@ -1,11 +1,10 @@
-import wrapText from "../Helpers/wrapText"
-
 const drawTextBoxLeft = (
   g,
   width,
   x_block_start,
   height,
-  blocks_container_width
+  blocks_container_width,
+  textboxHeight
 ) => {
   const rect = g.select("#rect_left")
 
@@ -13,7 +12,7 @@ const drawTextBoxLeft = (
   const arrow = g.select("#arrow_1")
 
   const textBox_width = (x_block_start - 20) * 0.65
-  const textBox_height = height * 0.6
+  const textBox_height = textboxHeight
 
   const borderRadius = 8
 
@@ -33,7 +32,7 @@ const drawTextBoxLeft = (
 
   warningSign
     .attr("width", textBox_width / 3)
-    .attr("height", textBox_height / 3)
+    .attr("height", textBox_height / 2.5)
     .attr("x", textBox_width / 3)
     .attr("y", (height - textBox_height) / 2 + textBox_height / 2)
 
@@ -44,7 +43,7 @@ const drawTextBoxLeft = (
     .attr("height", textBox_height * 0.75)
     // .attr("x", -(x_block_start - textBox_width)/2)
     .attr("x", -arr_x)
-    .attr("y", (height - height * 0.6) / 2 + (textBox_height * 0.25) / 2)
+    .attr("y", (height - textBox_height) / 2 + (textBox_height * 0.25) / 2)
 }
 
 export default drawTextBoxLeft

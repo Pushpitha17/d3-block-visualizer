@@ -3,14 +3,15 @@ const drawTextBoxRight = (
   width,
   height,
   x_block_start,
-  blocks_container_width
+  blocks_container_width,
+  textboxHeight
 ) => {
   const rect = g.select("#rect_right")
 
   const arrow = g.select("#arrow_2")
 
   const textBox_width = (x_block_start - 20) * 0.65
-  const textBox_height = height * 0.6
+  const textBox_height = textboxHeight
 
   const borderRadius = 8
 
@@ -35,7 +36,7 @@ const drawTextBoxRight = (
     .attr("height", textBox_height * 0.75)
     // .attr("x", -(x_block_start - textBox_width)/2)
     .attr("x", arr_x)
-    .attr("y", (height - height * 0.6) / 2 + (textBox_height * 0.25) / 2)
+    .attr("y", (height - textBox_height) / 2 + (textBox_height * 0.25) / 2)
 }
 
 export default drawTextBoxRight

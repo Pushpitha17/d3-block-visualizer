@@ -41,6 +41,8 @@ for (let i = 1; i < 11; i++) {
 const space_multiplier = 1.5
 const color_change_duration = 10000
 
+const textboxHeight = 280
+
 export {
   grey,
   colors,
@@ -49,4 +51,5 @@ export {
   row_break_points,
   space_multiplier,
   color_change_duration,
+  textboxHeight
 }

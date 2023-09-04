@@ -52,6 +52,7 @@ function FormatNumber(num) {
 function SliderComponent() {
   const [unscaledVal, setUnscaledVal] = useState(0);
   const dataEnabled = useSelector((state) => state.switch.dataEnabled);
+  const width = useSelector((state) => state.svg.width);
 
   const dispatch = useDispatch()
 
@@ -114,6 +115,9 @@ function SliderComponent() {
       disabled={dataEnabled}
       valueLabelDisplay="on"
       valueLabelFormat={FormatNumber}
+      sx={{
+        width : `${width}px`
+      }}
     />
   );
 }

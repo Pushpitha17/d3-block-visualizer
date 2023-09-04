@@ -6,7 +6,7 @@ const drawSquare = (
   container_width,
   color
 ) => {
-  const square_length = (container_height - y_start) / 15
+  const square_length = (container_height - y_start) / 12
   const x_end = x_start + container_width
 
   const square = svg

@@ -13,7 +13,7 @@ const drawDocumentHeader = (
     .attr("text-anchor", "middle")
     .attr("alignment-baseline", "middle")
     .attr("fill", "black")
-    .style("font-size", "1.5rem")
+    .style("font-size", "1.25rem")
     .style("font", "Roboto", "Helvetica", "Arial")
     .style("display","block")
 
