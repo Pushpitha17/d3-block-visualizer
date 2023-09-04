@@ -19,7 +19,9 @@ function Index() {
           height: "calc(100vh - 180px)",
           flexDirection: 'column',
           margin: '0 auto',
-          alignItems: 'center'
+          alignItems: 'center', 
+          minWidth: `${width + 200}px`,
+          minHeight: '560px'
         }}
         maxWidth='xl'
         
@@ -28,7 +30,7 @@ function Index() {
           flex: 1,
           py: '20px',
           width: `${width}px`,
-          margin: '0 auto',
+          margin: '0 20px',
         }}
         >
           <AnimationArea />
