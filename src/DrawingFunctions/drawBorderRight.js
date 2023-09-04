@@ -26,7 +26,7 @@ const drawBorderRight = (
       .attr("fill", "rgba(100%, 100%, 100%, 0.6)")
       .attr("rx", br)
       .attr("ry", br)
-      .style("stroke", "black")
+      .style("stroke", "#439EFF")
       .style("stroke-width", 0.6)
   } else {
     rect.attr("display", "none")

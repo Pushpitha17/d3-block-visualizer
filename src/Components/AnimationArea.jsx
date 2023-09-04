@@ -107,7 +107,7 @@ function AnimationArea() {
       y_block_start = (height - blocks_container_height) / 2 + 50
 
       let headerElement = container.select("#header")
-      drawDocumentHeader(headerElement, `${calHeaderValue(sliderValue)} Documents`, x_block_start, y_block_start - header_height_sm - header_padding, blocks_container_width, header_height_sm / 2, dataEnabled)
+      drawDocumentHeader(headerElement, `${calHeaderValue(sliderValue)} Documents`, x_block_start, y_block_start - header_height_sm - header_padding, blocks_container_width, header_height_sm, dataEnabled)
 
       scaled_x_block_start = width - (blocks_container_width + 30)
       scaled_y_block_start = y_block_start
@@ -356,8 +356,6 @@ function AnimationArea() {
             <g id="squares"></g>
             <rect id="border_right"></rect>
             <text id="header_right"></text>
-            <path id="border1"></path>
-            <path id="border2"></path>
           </svg>
           {!dataEnabled && <Box sx={{
             maxWidth: (mainCordinates.x_block_start - 20) * 0.6,
