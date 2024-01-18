@@ -372,7 +372,7 @@ function AnimationArea() {
                 overflow: 'hidden'
               }}
 
-            >The more documents and data, the more opportunities for duplicate, out-dated information, and AI failure.</Typography>
+            >Increasing the slider value adds blocks with a random color </Typography>
           </Box>}
           {!dataEnabled && <Box sx={{
             maxWidth: (mainCordinates.x_block_start - 20) * 0.6,
@@ -392,17 +392,17 @@ function AnimationArea() {
                 flex: "0 0 auto"
               }}
 
-            >Over time, your documents and content will become outdated. Training your AI on outdated information creates business risk.</Typography>
+            >The Bolcks are set to fade over time to gray. </Typography>
             <Box sx={{ flex: "1 0 0", display: 'flex', alignItems: 'center' }}>
               <Typography
                 sx={{
                   maxWidth: (mainCordinates.x_block_start - 20) * 0.65,
-                  fontSize: '0.7rem',
+                  fontSize: '0.9rem',
                   wordBreak: "break-word",
                   overflow: 'hidden',
                 }}
 
-              >Click to see how we solved the problem.</Typography>
+              >Swith to start the animation.</Typography>
             </Box>
 
           </Box>}

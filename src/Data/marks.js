@@ -8,38 +8,38 @@ const marks = [
   {
     value: width_of_section * 0,
     scaledValue: 10,
-    label: "10 Documents",
-    lable_secondary: "One Employee per Day",
+    label: "10 Items",
+    lable_secondary: "Items reflects slider value",
   },
   {
     value: width_of_section * 1,
     scaledValue: 100,
-    label: "100 Documents",
-    lable_secondary: "One Team's Work per Day",
+    label: "100 Items",
+    lable_secondary: "Items reflects slider value",
   },
   {
     value: width_of_section * 2,
     scaledValue: 1000,
-    label: "1000 Documents",
-    lable_secondary: "One Product Team per Day",
+    label: "1000 Items",
+    lable_secondary: "Items reflects slider value",
   },
   {
     value: width_of_section * 3,
     scaledValue: 1900, //increment 1 for 10
-    label: "10,000 Documents",
-    lable_secondary: "One GTM Motion",
+    label: "10,000 Items",
+    lable_secondary: "Blocks are added with scaled down factor for the interval.",
   },
   {
     value: width_of_section * 4,
     scaledValue: 2800,
-    label: "100,000 Documents",
-    lable_secondary: "One GTM Motion + One Quater Customer Interaction",
+    label: "100,000 Items",
+    lable_secondary: "Blocks are added with scaled down factor for the interval.",
   },
   {
     value: width_of_section * 5,
     scaledValue: 3800,
-    label: "1,000,000 + Documents",
-    lable_secondary: "One End to End offering per year",
+    label: "1,000,000 + Items",
+    lable_secondary: "Blocks are added with scaled down factor for the interval.",
   },
 ];
 

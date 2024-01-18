@@ -14,7 +14,7 @@ function AppBar() {
       }}
     >
       <Typography variant="h5" p={3}>
-        Data Grid Bar Chart with React and D3.js
+        Data visualization with React and D3.js
       </Typography>
     </Box>
   );

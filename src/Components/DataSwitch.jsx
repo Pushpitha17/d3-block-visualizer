@@ -26,7 +26,7 @@ const DataSwitch = () => {
       }}
       value={!switchState ? "start" : "end"}
       control={<Switch color="primary" checked={switchState} onClick={handleToggle} />}
-      label={!switchState ? "Turnkey AI Disabled" : "Turnkey AI Enabled"}
+      label={!switchState ? "Animation Disabled" : "Animation Enabled"}
       labelPlacement="start"
     />
   )
